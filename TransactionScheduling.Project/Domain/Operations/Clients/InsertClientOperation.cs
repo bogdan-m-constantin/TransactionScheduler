@@ -3,7 +3,7 @@ using System.Data;
 using TransactionScheduling.Project.Domain.Objects;
 namespace TransactionScheduling.Project.Domain.Operations.Clients
 {
-    public class InsertClientOperation(SqlConnection con, Client client) : BaseSqlOperation<object?>(con)
+    public class InsertClientOperation(SqlConnection con, Client client) : BaseSqlOperation(con)
     {
         public override string TableName => "Clients";
 

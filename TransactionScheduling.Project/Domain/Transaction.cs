@@ -10,7 +10,7 @@ namespace TransactionScheduling.Project.Domain
         public CancellationTokenSource? CancelationToken { get; set; }
         public Guid Id { get; } = Guid.NewGuid();
         public int SuccessfullOperations;
-        public Queue<BaseSqlOperation<object>> Operations { get; set; } = new();
+        public Queue<BaseSqlOperation> Operations { get; set; } = new();
         public List<string> TablesToLock => Operations.Select(o => o.TableName).Distinct().ToList();
         
     }

@@ -2,7 +2,7 @@
 using TransactionScheduling.Project.Domain.Objects;
 namespace TransactionScheduling.Project.Domain.Operations.Orders
 {
-    public class ReadOrderOperation(SqlConnection con, int? id) : BaseSqlOperation<List<Order>>(con)
+    public class ReadOrderOperation(SqlConnection con, int? id) : BaseSqlOperation(con)
     {
         public override string TableName => "Orders";
 

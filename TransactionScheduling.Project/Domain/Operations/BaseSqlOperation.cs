@@ -73,7 +73,7 @@ namespace TransactionScheduling.Project.Domain.Operations
             foreach (DataColumn col in PreviousData!.Table.Columns)
             {
                 cols.Add($"[{col.ColumnName}]");
-                values.Add(BaseSqlOperation<TResult>.FormatValue(col, PreviousData[col.ColumnName]));
+                values.Add(FormatValue(col, PreviousData[col.ColumnName]));
 
             }
             using var preCmd = new SqlCommand($"SET IDENTITY_INSERT [dbo].[{TableName}] ON; ", _con);
@@ -94,7 +94,7 @@ namespace TransactionScheduling.Project.Domain.Operations
                 if (!col.ColumnName.Equals("id", StringComparison.InvariantCultureIgnoreCase))
                 {
 
-                    assingments.Add($"[{col.ColumnName}] = {BaseSqlOperation<TResult>.FormatValue(col, PreviousData[col.ColumnName])}");
+                    assingments.Add($"[{col.ColumnName}] = {FormatValue(col, PreviousData[col.ColumnName])}");
                 }
             }
             var cmd = new SqlCommand($"UPDATE {TableName} SET {string.Join(",", assingments)} WHERE [Id] = {RowId} ", _con);

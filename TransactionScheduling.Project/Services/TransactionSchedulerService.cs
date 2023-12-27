@@ -24,10 +24,11 @@ namespace TransactionScheduling.Project.Services
 
                     foreach (var op in transaction.Operations)
                     {
-
                         tokenSource.Token.ThrowIfCancellationRequested();
+                        
                         var res = op.Execute();
                         response.Add(res);
+                     
                         transaction.SuccessfullOperations++;
                     }
                 },0, tokenSource.Token);
@@ -44,6 +45,7 @@ namespace TransactionScheduling.Project.Services
                 _logger.LogInformation($"Finalizat rollback {transaction.Id} (ABORT)");
                 throw;
             }
+            return response;
 
         }
 

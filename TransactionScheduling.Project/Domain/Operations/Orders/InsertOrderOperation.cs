@@ -3,7 +3,7 @@ using System.Data;
 using TransactionScheduling.Project.Domain.Objects;
 namespace TransactionScheduling.Project.Domain.Operations.Orders
 {
-    public class InsertOrderOperation(SqlConnection con, Order order) : BaseSqlOperation<object?>(con)
+    public class InsertOrderOperation(SqlConnection con, Order order) : BaseSqlOperation(con)
     {
         public override string TableName => "Orders";
 
