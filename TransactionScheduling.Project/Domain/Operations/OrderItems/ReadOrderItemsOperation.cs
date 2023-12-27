@@ -1,8 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using TransactionScheduling.Project.Domain.Objects;
-namespace TransactionScheduling.Project.Domain.Operations.Orders
+namespace TransactionScheduling.Project.Domain.Operations.OrderItems
 {
-    public class ReadOrderOperation(SqlConnection con, int? id) : BaseSqlOperation(con)
+    public class ReadOrderItemsOperation(SqlConnection con, int? id) : BaseSqlOperation(con)
     {
         public override string TableName => "Orders";
 
@@ -11,7 +11,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
             RollbackOperation = RollbackOperation.Nothing;
 
             base.Execute();
-            using var cmd = new SqlCommand($"SELECT * FROM Orders {(id == null ? "" : $"WHERE Id = {id.Value}")}", _con);
+            using var cmd = new SqlCommand($"SELECT * FROM OrderItems {(id == null ? "" : $"WHERE Id = {id.Value}")}", _con);
             using var reader = cmd.ExecuteReader();
             var lst = new List<Order>();
             while (reader.Read())
@@ -20,7 +20,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
                     Convert.ToInt32(reader["Id"]),
                     Convert.ToInt32(reader["Client"]),
                     Convert.ToDateTime(reader["Timestamp"]),
-                    []
+                    new()
                     )
                 );
             }

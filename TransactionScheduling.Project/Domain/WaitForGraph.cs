@@ -19,7 +19,7 @@
         {
             foreach (var table in _tables)
             {
-                var visited = new Guid[] { };
+                var visited = Array.Empty<Guid>();
                 var t = table.TransactionHasLock?.TransactionWaitingLock;
 
                 while (t != null)

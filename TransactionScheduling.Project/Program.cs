@@ -1,3 +1,4 @@
+using TransactionScheduling.Project.Domain;
 using TransactionScheduling.Project.Domain.SQL;
 using TransactionScheduling.Project.Services;
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSql(builder.Configuration);
-builder.Services.AddSingleton<TransactionSchedulerService>();
+builder.Services.AddSingleton<WaitForGraph>();
 builder.Services.AddSingleton<TransactionSchedulerService>();
 builder.Services.AddSingleton<TransactionSchedulerHostedService>();
 builder.Services.AddHostedService<TransactionSchedulerHostedService>();

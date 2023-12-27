@@ -7,7 +7,7 @@
     }
     public class SqlOptions
     {
-        private readonly Dictionary<SqlDatabase, string> _connectionStrings = new();
+        private readonly Dictionary<SqlDatabase, string> _connectionStrings = [];
         public string this[SqlDatabase db]
         {
             get => _connectionStrings[db];
