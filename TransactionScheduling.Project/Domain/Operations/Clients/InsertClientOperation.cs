@@ -22,7 +22,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Clients
             cmd.Parameters.Add(new("@DateOfBirth", client.DateOfBirth));
             cmd.Parameters.Add(new("@AmmountOfPoints", client.AmmountOfPoints));
             cmd.ExecuteNonQuery();
-            client.Id = Convert.ToInt32(cmd.Parameters["@Id"]);
+            client.Id = Convert.ToInt32(cmd.Parameters["@Id"].Value);
             return client;
 
         }

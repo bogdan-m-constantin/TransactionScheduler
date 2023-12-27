@@ -4,23 +4,24 @@ namespace TransactionScheduling.Project.Domain.Operations.OrderItems
 {
     public class ReadOrderItemsOperation(SqlConnection con, int? id) : BaseSqlOperation(con)
     {
-        public override string TableName => "Orders";
+        public override string TableName => "OrderItems";
 
-        public override List<Order> Execute()
+        public override List<OrderItem> Execute()
         {
             RollbackOperation = RollbackOperation.Nothing;
 
             base.Execute();
             using var cmd = new SqlCommand($"SELECT * FROM OrderItems {(id == null ? "" : $"WHERE Id = {id.Value}")}", _con);
             using var reader = cmd.ExecuteReader();
-            var lst = new List<Order>();
+            var lst = new List<OrderItem>();
             while (reader.Read())
             {
-                lst.Add(new Order(
+                lst.Add(new OrderItem(
                     Convert.ToInt32(reader["Id"]),
-                    Convert.ToInt32(reader["Client"]),
-                    Convert.ToDateTime(reader["Timestamp"]),
-                    new()
+                    Convert.ToInt32(reader["Product"]),
+                    reader["ProductName"].ToString(),
+                    Convert.ToDouble(reader["Price"]),
+                    Convert.ToInt32(reader["Quantity"])
                     )
                 );
             }

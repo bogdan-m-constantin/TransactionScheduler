@@ -2,7 +2,7 @@
 using TransactionScheduling.Project.Domain.Objects;
 namespace TransactionScheduling.Project.Domain.Operations.Orders
 {
-    public class ReadOrderOperation(SqlConnection con, int? id) : BaseSqlOperation(con)
+    public class ReadOrderOperation(SqlConnection con, int clientId, int? id) : BaseSqlOperation(con)
     {
         public override string TableName => "Orders";
 
@@ -11,7 +11,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
             RollbackOperation = RollbackOperation.Nothing;
 
             base.Execute();
-            using var cmd = new SqlCommand($"SELECT * FROM Orders {(id == null ? "" : $"WHERE Id = {id.Value}")}", _con);
+            using var cmd = new SqlCommand($"SELECT * FROM Orders WHERE ClientId = {clientId} {(id == null ? "" : $" AND Id = {id.Value}")}", _con);
             using var reader = cmd.ExecuteReader();
             var lst = new List<Order>();
             while (reader.Read())

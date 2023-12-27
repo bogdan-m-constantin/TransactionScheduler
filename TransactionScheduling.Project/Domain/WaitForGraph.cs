@@ -10,7 +10,7 @@
             _tables.Clear();
             _tables.Add(new Table("Clients"));
             _tables.Add(new Table("Orders"));
-            _tables.Add(new Table("OrderItem"));
+            _tables.Add(new Table("OrderItems"));
             _tables.Add(new Table("Products"));
             
         }

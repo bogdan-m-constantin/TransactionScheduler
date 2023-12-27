@@ -80,7 +80,7 @@ namespace TransactionScheduling.Project.Domain.Operations
             preCmd.ExecuteNonQuery();
 
             using var cmd = new SqlCommand($"INSERT ITNO [{TableName}]({string.Join(",", cols)}) VALUES ({string.Join(",", values)})", _con);
-
+            cmd.ExecuteNonQuery();
             using var postCmd = new SqlCommand($"SET IDENTITY_INSERT [dbo].[{TableName}] OFF; ", _con);
             postCmd.ExecuteNonQuery();
 
@@ -98,7 +98,9 @@ namespace TransactionScheduling.Project.Domain.Operations
                 }
             }
             var cmd = new SqlCommand($"UPDATE {TableName} SET {string.Join(",", assingments)} WHERE [Id] = {RowId} ", _con);
+        
             cmd.ExecuteNonQuery();
+            
 
         }
 

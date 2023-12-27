@@ -4,6 +4,7 @@
     {
         public int Client { get; set; } = client;
         public DateTime Timestamp { get; set; } = timestamp;
+        public List<OrderItem> Items { get; set; } = items;
         
     }
     

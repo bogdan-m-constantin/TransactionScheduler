@@ -10,7 +10,6 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
         public override object? Execute()
         {
             RollbackOperation = RollbackOperation.Delete;
-            RowId = order.Id;
             base.Execute();
 
             using var cmd = new SqlCommand($"INSERT INTO Orders (Client ,Timestamp) VALUES (@Client ,@Timestamp); SET @id = SCOPE_IDENTITY()", _con);
@@ -18,7 +17,8 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
             cmd.Parameters.Add(new("@Client", order.Client));
             cmd.Parameters.Add(new("@Timestamp", order.Timestamp));
             cmd.ExecuteNonQuery();
-            order.Id = Convert.ToInt32(cmd.Parameters["@Id"]);
+            order.Id = Convert.ToInt32(cmd.Parameters["@Id"].Value);
+            RowId = order.Id;
             return order;
 
         }

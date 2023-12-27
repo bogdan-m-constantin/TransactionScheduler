@@ -7,7 +7,7 @@ using TransactionScheduling.Project.Domain.Operations.Clients;
 using TransactionScheduling.Project.Domain.SQL;
 using TransactionScheduling.Project.Services;
 
-namespace TransactionScheduling.Project
+namespace TransactionScheduling.Project.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -16,8 +16,7 @@ namespace TransactionScheduling.Project
 
         private readonly TransactionSchedulerService _service = service;
         private readonly SqlOptions _sql = sql;
-
-        [HttpGet]
+        [HttpGet("")]
         public ActionResult<List<Client>> GetClients()
         {
             using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
@@ -25,7 +24,19 @@ namespace TransactionScheduling.Project
             var transaction = new Transaction();
             transaction.Operations.Enqueue(new ReadClientOperation(con1, null));
             var resp = _service.Run(transaction);
-            return (List<Client>)resp[0]!;
+            return Ok((List<Client>)resp[0]!);
+
+
+        }
+        [HttpGet("{clientId}")]
+        public ActionResult<List<Client>> GetClients(int clientId)
+        {
+            using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
+            con1.Open();
+            var transaction = new Transaction();
+            transaction.Operations.Enqueue(new ReadClientOperation(con1, clientId));
+            var resp = _service.Run(transaction);
+            return Ok((List<Client>)resp[0]!);
 
 
         }
