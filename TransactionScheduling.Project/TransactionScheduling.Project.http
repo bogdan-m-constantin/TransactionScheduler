@@ -1,0 +1,6 @@
+@TransactionScheduling.Project_HostAddress = http://localhost:5288
+
+GET {{TransactionScheduling.Project_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
