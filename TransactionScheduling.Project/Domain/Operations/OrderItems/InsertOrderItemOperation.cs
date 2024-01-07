@@ -22,7 +22,7 @@ namespace TransactionScheduling.Project.Domain.Operations.OrderItems
             cmd.Parameters.Add(new("@OrderId", order.Id));
             cmd.ExecuteNonQuery();
             item.Id = Convert.ToInt32(cmd.Parameters["@Id"].Value);
-            RowId = item.Id;
+            RowIds.Add(item.Id);
             return item;
         }
     }

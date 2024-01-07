@@ -4,7 +4,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Products
 {
     public class ReadProductsOperation(SqlConnection con, int? id) : BaseSqlOperation(con)
     {
-        public override string TableName => "Orders";
+        public override string TableName => "Products";
 
         public override List<Product> Execute()
         {

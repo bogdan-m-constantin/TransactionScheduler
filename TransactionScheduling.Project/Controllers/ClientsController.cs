@@ -29,7 +29,7 @@ namespace TransactionScheduling.Project.Controllers
 
         }
         [HttpGet("{clientId}")]
-        public ActionResult<List<Client>> GetClients(int clientId)
+        public ActionResult<List<Client>> GetClient(int clientId)
         {
             using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
             con1.Open();

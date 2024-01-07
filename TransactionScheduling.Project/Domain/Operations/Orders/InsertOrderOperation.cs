@@ -18,7 +18,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
             cmd.Parameters.Add(new("@Timestamp", order.Timestamp));
             cmd.ExecuteNonQuery();
             order.Id = Convert.ToInt32(cmd.Parameters["@Id"].Value);
-            RowId = order.Id;
+            RowIds.Add(order.Id);
             return order;
 
         }

@@ -1,21 +1,24 @@
 ﻿using Microsoft.Data.SqlClient;
+using System.Data;
+using TransactionScheduling.Project.Domain.Objects;
 namespace TransactionScheduling.Project.Domain.Operations.Products
 {
-    public class RemoveProductStockOperation(SqlConnection con, int id, int quantity) : BaseSqlOperation(con: con)
+    public class DeleteProductOperation(SqlConnection con, int id) : BaseSqlOperation(con)
     {
         public override string TableName => "Products";
 
         public override object? Execute()
         {
-            RollbackOperation = RollbackOperation.Update;
+            RollbackOperation = RollbackOperation.Insert;
             RowIds.Add(id);
             base.Execute();
 
-            using var cmd = new SqlCommand($"UPDATE Products SET  Stock = Stock - @Quantity WHERE Id = @Id", _con);
+            using var cmd = new SqlCommand($"DELETE FROM Products WHERE Id = @Id", _con);
             cmd.Parameters.Add(new("@Id", id));
-            cmd.Parameters.Add(new("@Quantity", quantity));
             cmd.ExecuteNonQuery();
+
             return null;
+
         }
     }
 

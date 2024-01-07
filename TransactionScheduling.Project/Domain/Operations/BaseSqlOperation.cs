@@ -13,19 +13,20 @@ namespace TransactionScheduling.Project.Domain.Operations
     {
         protected readonly SqlConnection _con = con;
         public abstract string TableName { get; }
-        public int? RowId { get; set; }
-        private DataRow? PreviousData;
+        public List<int?> RowIds { get; set; } = new();
+        
+        private DataTable? PreviousData;
         protected RollbackOperation RollbackOperation = RollbackOperation.Nothing;
 
         protected void LoadCurrentData()
         {
-            if (RowId != null)
+            if (RowIds.Any())
             {
-                using var cmd = new SqlCommand($"SELECT * FROM [{TableName}] WHERE [Id] = {RowId} ", _con);
+                using var cmd = new SqlCommand($"SELECT * FROM [{TableName}] WHERE [Id] IN ({string.Join(",",RowIds)}) ", _con);
                 using var adadpter = new SqlDataAdapter(cmd);
                 using var table = new DataTable();
                 adadpter.Fill(table);
-                PreviousData = table.Rows.Cast<DataRow>().FirstOrDefault();
+                PreviousData = table;
             }
         }
 
@@ -39,7 +40,7 @@ namespace TransactionScheduling.Project.Domain.Operations
 
         public void Rollback()
         {
-            if (RowId != null)
+            if (RowIds.Any())
             {
                 switch (RollbackOperation)
                 {
@@ -61,26 +62,31 @@ namespace TransactionScheduling.Project.Domain.Operations
 
         private void ExecuteDeleteRollback()
         {
-            using var cmd = new SqlCommand($"DELETE FROM [{TableName}] WHERE [Id] = {RowId} ", _con);
+            using var cmd = new SqlCommand($"DELETE FROM [{TableName}] WHERE [Id] = {RowIds} ", _con);
             cmd.ExecuteNonQuery();
 
         }
 
         private void ExecuteInsertRollback()
         {
-            List<string> cols = [];
-            List<string> values = [];
-            foreach (DataColumn col in PreviousData!.Table.Columns)
-            {
-                cols.Add($"[{col.ColumnName}]");
-                values.Add(FormatValue(col, PreviousData[col.ColumnName]));
-
-            }
             using var preCmd = new SqlCommand($"SET IDENTITY_INSERT [dbo].[{TableName}] ON; ", _con);
             preCmd.ExecuteNonQuery();
 
-            using var cmd = new SqlCommand($"INSERT ITNO [{TableName}]({string.Join(",", cols)}) VALUES ({string.Join(",", values)})", _con);
-            cmd.ExecuteNonQuery();
+            foreach (DataRow row in PreviousData.Rows)
+            {
+                List<string> cols = [];
+                List<string> values = [];
+                foreach (DataColumn col in row.Table.Columns)
+                {
+                    cols.Add($"[{col.ColumnName}]");
+                    values.Add(FormatValue(col, row[col.ColumnName]));
+
+                }
+              
+                using var cmd = new SqlCommand($"INSERT INTO [{TableName}]({string.Join(",", cols)}) VALUES ({string.Join(",", values)})", _con);
+                cmd.ExecuteNonQuery();
+              
+            }
             using var postCmd = new SqlCommand($"SET IDENTITY_INSERT [dbo].[{TableName}] OFF; ", _con);
             postCmd.ExecuteNonQuery();
 
@@ -88,20 +94,24 @@ namespace TransactionScheduling.Project.Domain.Operations
 
         private void ExecuteUpdateRollback()
         {
-            List<string> assingments = [];
-            foreach (DataColumn col in PreviousData!.Table.Columns)
+            foreach (DataRow row in PreviousData.Rows)
             {
-                if (!col.ColumnName.Equals("id", StringComparison.InvariantCultureIgnoreCase))
+
+                List<string> assingments = [];
+
+                foreach (DataColumn col in row.Table.Columns)
                 {
+                    if (!col.ColumnName.Equals("id", StringComparison.InvariantCultureIgnoreCase))
+                    {
 
-                    assingments.Add($"[{col.ColumnName}] = {FormatValue(col, PreviousData[col.ColumnName])}");
+                        assingments.Add($"[{col.ColumnName}] = {FormatValue(col, row[col.ColumnName])}");
+                    }
                 }
-            }
-            var cmd = new SqlCommand($"UPDATE {TableName} SET {string.Join(",", assingments)} WHERE [Id] = {RowId} ", _con);
-        
-            cmd.ExecuteNonQuery();
-            
+                var cmd = new SqlCommand($"UPDATE {TableName} SET {string.Join(",", assingments)} WHERE [Id] = {row["Id"]} ", _con);
 
+                cmd.ExecuteNonQuery();
+
+            }
         }
 
         private static string FormatValue(DataColumn col, object value)

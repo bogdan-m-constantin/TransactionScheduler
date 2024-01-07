@@ -9,7 +9,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Clients
         public override object? Execute()
         {
             RollbackOperation = RollbackOperation.Update;
-            RowId = client.Id;
+            RowIds.Add(client.Id);
             base.Execute();
 
             using var cmd = new SqlCommand($"UPDATE Clients SET  FirstName = @FirstName,LastName = @LastName, PersonalCode = @PersonalCode, IdNumber = @IdNumber, DateOfBirth = @DateOfBirth, AmmountOfPoints = @AmmountOfPoints WHERE Id = @Id", _con);

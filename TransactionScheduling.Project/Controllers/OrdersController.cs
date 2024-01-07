@@ -7,6 +7,7 @@ using TransactionScheduling.Project.Domain.Operations.Clients;
 using TransactionScheduling.Project.Domain.Operations.OrderItems;
 using TransactionScheduling.Project.Domain.Operations.Orders;
 using TransactionScheduling.Project.Domain.Operations.Products;
+using TransactionScheduling.Project.Domain.Operations.ProductStockChange;
 using TransactionScheduling.Project.Domain.SQL;
 using TransactionScheduling.Project.Services;
 
@@ -31,7 +32,7 @@ namespace TransactionScheduling.Project
             return Ok((List<Order>)resp[0]!);
         }
         [HttpPost()]
-        public ActionResult<Order> InsertOrrder([FromBody] Order order)
+        public ActionResult<Order> InsertOrder([FromBody] Order order)
         {
             using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
             con1.Open();
@@ -42,7 +43,8 @@ namespace TransactionScheduling.Project
             foreach (var item in order.Items)
             {
                 transaction.Operations.Enqueue(new InsertOrderItemOperation(con2, item, order));
-                transaction.Operations.Enqueue(new RemoveProductStockOperation(con1, item.ProductId,item.Quantity));
+                transaction.Operations.Enqueue(new RemoveProductStockOperation(con1, item.ProductId, item.Quantity));
+                transaction.Operations.Enqueue(new InsertProductStockChangeOperation(con1, new Product(item.ProductId,"","",item.Quantity,0.0),true));
             }
             transaction.Operations.Enqueue(new AddClientPontsOperation(con1, order.Client, (int)order.Items.Sum(e => e.Price * e.Quantity)));
             var resp = _service.Run(transaction);

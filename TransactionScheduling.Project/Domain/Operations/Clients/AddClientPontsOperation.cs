@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using TransactionScheduling.Project.Domain.Objects;
 namespace TransactionScheduling.Project.Domain.Operations.Clients
 {
     public class AddClientPontsOperation(SqlConnection con, int id, int points) : BaseSqlOperation(con: con)
@@ -8,7 +9,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Clients
         public override object? Execute()
         {
             RollbackOperation = RollbackOperation.Update;
-            RowId = id;
+            RowIds.Add(id);
             base.Execute();
 
             using var cmd = new SqlCommand($"UPDATE Clients SET  AmmountOfPoints = AmmountOfPoints + @AmmountOfPoints WHERE Id = @Id", _con);

@@ -12,7 +12,9 @@
             _tables.Add(new Table("Orders"));
             _tables.Add(new Table("OrderItems"));
             _tables.Add(new Table("Products"));
-            
+            _tables.Add(new Table("ProductPriceChanges"));
+            _tables.Add(new Table("ProductStockChanges"));
+
         }
 
         public WaitForGraphNode? GetDeadLock()

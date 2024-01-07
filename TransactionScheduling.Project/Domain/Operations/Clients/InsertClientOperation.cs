@@ -10,7 +10,7 @@ namespace TransactionScheduling.Project.Domain.Operations.Clients
         public override object? Execute()
         {
             RollbackOperation = RollbackOperation.Delete;
-            RowId = client.Id;
+            RowIds.Add(client.Id);
             base.Execute();
 
             using var cmd = new SqlCommand($"INSERT INTO Clients (FirstName ,LastName , PersonalCode , IdNumber , DateOfBirth , AmmountOfPoints) VALUES (@FirstName ,@LastName , @PersonalCode , @IdNumber , @DateOfBirth , @AmmountOfPoints); SET @id = SCOPE_IDENTITY()", _con);
