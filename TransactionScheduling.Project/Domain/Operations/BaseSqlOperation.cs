@@ -20,6 +20,7 @@ namespace TransactionScheduling.Project.Domain.Operations
 
         protected void LoadCurrentData()
         {
+            
             if (RowIds.Any())
             {
                 using var cmd = new SqlCommand($"SELECT * FROM [{TableName}] WHERE [Id] IN ({string.Join(",",RowIds)}) ", _con);
@@ -62,7 +63,8 @@ namespace TransactionScheduling.Project.Domain.Operations
 
         private void ExecuteDeleteRollback()
         {
-            using var cmd = new SqlCommand($"DELETE FROM [{TableName}] WHERE [Id] = {RowIds} ", _con);
+            using var cmd = new SqlCommand($"DELETE FROM [{TableName}] WHERE [Id] IN ({string.Join(",",RowIds)})", _con);
+            Console.WriteLine($"Execut op rollback {cmd.CommandText}");
             cmd.ExecuteNonQuery();
 
         }
@@ -84,6 +86,7 @@ namespace TransactionScheduling.Project.Domain.Operations
                 }
               
                 using var cmd = new SqlCommand($"INSERT INTO [{TableName}]({string.Join(",", cols)}) VALUES ({string.Join(",", values)})", _con);
+                Console.WriteLine($"Execut op rollback {cmd.CommandText}");
                 cmd.ExecuteNonQuery();
               
             }
@@ -108,7 +111,7 @@ namespace TransactionScheduling.Project.Domain.Operations
                     }
                 }
                 var cmd = new SqlCommand($"UPDATE {TableName} SET {string.Join(",", assingments)} WHERE [Id] = {row["Id"]} ", _con);
-
+                Console.WriteLine($"Execut op rollback {cmd.CommandText}");
                 cmd.ExecuteNonQuery();
 
             }

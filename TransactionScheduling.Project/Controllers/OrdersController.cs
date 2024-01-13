@@ -54,7 +54,7 @@ namespace TransactionScheduling.Project
             {
                 transaction.Operations.Enqueue(new InsertOrderItemOperation(con2, item, order));
                 transaction.Operations.Enqueue(new RemoveProductStockOperation(con1, item.ProductId, item.Quantity));
-                transaction.Operations.Enqueue(new InsertProductStockChangeOperation(con1, new Product(item.ProductId,"","",item.Quantity,0.0),true));
+                transaction.Operations.Enqueue(new InsertProductStockChangeOperation(con2, new Product(item.ProductId,"","",item.Quantity,0.0),true));
             }
             transaction.Operations.Enqueue(new AddClientPontsOperation(con1, order.Client, (int)order.Items.Sum(e => e.Price * e.Quantity)));
             var resp = _service.Run(transaction);

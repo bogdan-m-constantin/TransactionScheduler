@@ -9,16 +9,49 @@
   <button (click)="logout()" mat-button><mat-icon>exit_to_app</mat-icon> Logout</button>
 </mat-toolbar>
 <div class="wrapper">
-  <div class="shopping-cart mat-elevation-z4" [class.hidden]="!shoppingCart">
+  <div class="shopping-cart mat-elevation-z4" [class.hidden]="!shoppingCart" (click)="$event.stopPropagation()">
+    <div class="shopping-cart-header">
+      <h3>Shopping Cart</h3>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="showShoppingCart($event)"><mat-icon>close</mat-icon></button>
+    </div>
     <div class="shopping-cart-content">
+      @for (item of order.items; track $index) {
+      <div class="item">
+        <img src="../../assets/product.png"><span class="pname">{{item.productName}}</span><span
+          class="qty">x{{item.quantity}}</span>
+        <span class="val">{{item.quantity * item.price}} Lei</span>
+      </div>
+      }
 
+    </div>
+    <div class="shopping-cart-total">
+      <span class="total">Total: </span><span>{{order.total |number: '1.2'}}</span>
+    </div>
+    <div class="shopping-cart-actions">
+      <button mat-flat-button color="accent" (click)="finishOrder()"><mat-icon>shopping_cart_checkout</mat-icon>Finalize
+        Order</button>
     </div>
   </div>
 
-  <div class="content mat-elevation-z4">
+  <div class="content ">
     @for (product of products; track product.id) {
     <div class="product-item">
-      <span class="product-title">{{product.name}}</span>
+      <div class="left-side">
+        <div class="img-wrapper">
+          <img src="../../assets/product.png">
+        </div>
+      </div>
+      <div class="middle-side">
+        <span class="product-title">{{product.name}}</span>
+        <span class="product-description">{{product.description}}</span>
+
+      </div>
+      <div class="right-side">
+        <span class="product-price">{{product.price | number: '1.2'}} Lei</span>
+        <button mat-raised-button color="accent" (click)="addToCart(product)"><mat-icon>add_shopping_cart</mat-icon> Add
+          to cart</button>
+      </div>
     </div>
     }
   </div>

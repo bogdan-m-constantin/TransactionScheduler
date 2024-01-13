@@ -34,6 +34,9 @@ export class WebApiService {
   async getClients(): Promise<Client[]> {
     return firstValueFrom(this.http.get<Client[]>(`${this.baseUrl}/clients`))
   }
+  async getClient(clientId: number): Promise<Client> {
+    return firstValueFrom(this.http.get<Client>(`${this.baseUrl}/clients/${clientId}`))
+  }
   async insertClient(client: Client): Promise<Client> {
     return firstValueFrom(this.http.post<Client>(`${this.baseUrl}/clients`, client))
   }
@@ -50,5 +53,8 @@ export class WebApiService {
   }
   async getOrderItems(orderId: number): Promise<OrderItem[]> {
     return firstValueFrom(this.http.get<OrderItem[]>(`${this.baseUrl}/orders/items/${orderId}`))
+  }
+  async insertOrder(order: Order): Promise<Order> {
+    return firstValueFrom(this.http.post<Order>(`${this.baseUrl}/orders`, order))
   }
 }

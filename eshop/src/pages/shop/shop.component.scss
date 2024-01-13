@@ -53,3 +53,147 @@ h1 {
 
   }
 }
+
+.product-item {
+  border-bottom: 1px solid #ccc;
+  display: flex;
+
+  img {
+    max-width: 128px;
+    max-height: 224px;
+  }
+
+  .img-wrapper {
+    padding: 16px;
+    width: 128px;
+    margin: 16px;
+  }
+
+  .middle-side {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .right-side {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .product-price {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .product-title {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .product-description {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .mdc-button {
+    padding: 8px 8px !important;
+    max-height: 64px;
+    height: 48px !important;
+    margin-top: 16px;
+  }
+
+  button mat-icon {
+    font-size: 32px;
+    height: 32px;
+    width: 32px;
+    margin: 0;
+    margin-right: 8px;
+    display: block;
+  }
+}
+
+.content {
+  flex-grow: 1;
+  overflow: auto;
+  background: #fff;
+}
+
+.wrapper {
+  background: #f5f5f5;
+}
+
+
+.shopping-cart div {
+  display: flex;
+}
+
+.shopping-cart-header {
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+  padding-left: 16px;
+
+  h3 {
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+.shopping-cart-content {
+  flex-grow: 1;
+  overflow: auto;
+  flex-direction: column;
+
+  .item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+
+    img {
+      max-width: 64px;
+      height: 64px;
+    }
+
+    .pname {
+      flex-grow: 1;
+      padding: 8px;
+      text-align: justify;
+    }
+
+    .qty {
+      padding: 8px;
+      width: 48px;
+      text-align: right;
+    }
+
+    .val {
+      width: 96px;
+      text-align: right;
+    }
+  }
+}
+
+.shopping-cart-actions {
+
+  button {
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    width: 100%;
+    margin: 0;
+    font-weight: 600;
+  }
+}
+
+.total {
+  flex-grow: 1;
+}
+
+.shopping-cart-total {
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
