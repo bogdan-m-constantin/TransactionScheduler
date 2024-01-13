@@ -11,7 +11,9 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
             RollbackOperation = RollbackOperation.Nothing;
 
             base.Execute();
-            using var cmd = new SqlCommand($"SELECT * FROM Orders WHERE ClientId = {clientId} {(id == null ? "" : $" AND Id = {id.Value}")}", _con);
+            using var cmd = new SqlCommand($"SELECT * FROM Orders WHERE (Client = @ClientId OR -1 = @ClientId) {(id == null ? "" : $" AND Id = @Id")}", _con);
+            cmd.Parameters.Add(new("@ClientId", clientId));
+            cmd.Parameters.Add(new("@Id", id ?? (object)DBNull.Value));
             using var reader = cmd.ExecuteReader();
             var lst = new List<Order>();
             while (reader.Read())
@@ -20,7 +22,8 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
                     Convert.ToInt32(reader["Id"]),
                     Convert.ToInt32(reader["Client"]),
                     Convert.ToDateTime(reader["Timestamp"]),
-                    []
+                    [],
+                    Convert.ToDouble(reader["Total"])
                     )
                 );
             }

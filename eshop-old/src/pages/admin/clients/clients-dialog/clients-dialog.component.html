@@ -1,0 +1,66 @@
+<div mat-dialog-title>
+  <div class="top-bar">
+    <h2>{{client.id == -1 ? "Insert": "Edit"}} Client</h2>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup" (ngSubmit)="save()" #form>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label for="firstName">First Name</mat-label>
+        <input matInput formControlName="firstName" type="text" name="firstName" />
+        @if (this.formGroup.controls['firstName'].invalid) {
+        <mat-error>{{getErrorMessage('firstName')}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="lastName">Last Name</mat-label>
+        <input matInput formControlName="lastName" type="text" name="lastName" />
+        @if (this.formGroup.controls['lastName'].invalid) {
+        <mat-error>{{getErrorMessage('lastName')}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="personalCode">Personal Code</mat-label>
+        <input matInput formControlName="personalCode" type="text" name="personalCode" />
+        @if (this.formGroup.controls['personalCode'].invalid) {
+        <mat-error>{{getErrorMessage('personalCode')}}</mat-error>
+        }
+      </mat-form-field>
+
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label for="idNumber">ID Number</mat-label>
+        <input matInput formControlName="idNumber" type="text" name="idNumber" />
+        @if (this.formGroup.controls['idNumber'].invalid) {
+        <mat-error>{{getErrorMessage('idNumber')}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="dateOfBirth">Birth Date</mat-label>
+        <input matInput formControlName="dateOfBirth" [matDatepicker]="picker" name="dateOfBirth" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (this.formGroup.controls['dateOfBirth'].invalid) {
+        <mat-error>{{getErrorMessage('dateOfBirth')}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="ammountOfPoints">Points</mat-label>
+        <input matInput formControlName="ammountOfPoints" type="number" name="ammountOfPoints" />
+        @if (this.formGroup.controls['ammountOfPoints'].invalid) {
+        <mat-error>{{getErrorMessage('ammountOfPoints')}}</mat-error>
+        }
+      </mat-form-field>
+
+    </div>
+
+    <div class="actions">
+      <div class="spacer"></div>
+      <button mat-raised-button color="accent" (click)="form.requestSubmit()"><mat-icon>save</mat-icon> Save</button>
+    </div>
+  </form>
+</div>

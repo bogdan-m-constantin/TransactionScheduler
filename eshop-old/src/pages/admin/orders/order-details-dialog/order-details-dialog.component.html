@@ -1,0 +1,35 @@
+<div mat-dialog-title>
+  <div class="top-bar">
+    <h2>Order Details</h2>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="order-details">
+      <h3>Order</h3>
+      <div class="detail-item">
+        <span class="detail-item-title">Number</span><span class="detail-item-vale">{{order.id}}</span>
+      </div>
+      <div class="detail-item"><span class="detail-item-title">Timestamp</span><span
+          class="detail-item-vale">{{order.timestamp | date: 'dd MMM yyyy HH:mm'}}</span>
+      </div>
+    </div>
+    <div class="client-details">
+      <h3>Client</h3>
+      <div class="detail-item">
+        <span class="detail-item-title">Name</span><span class="detail-item-vale">{{client.firstName}}
+          {{client.lastName}}</span>
+
+      </div>
+      <div class="detail-item">
+        <span class="detail-item-title">Age</span><span class="detail-item-vale">{{client.dateOfBirth }}</span>
+
+      </div>
+      <div class="detail-item"><span class="detail-item-title">Points</span><span
+          class="detail-item-vale">{{client.ammountOfPoints}}</span>
+      </div>
+    </div>
+  </div>
+</div>

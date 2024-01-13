@@ -1,0 +1,49 @@
+<div mat-dialog-title>
+  <div class="top-bar">
+    <h2>{{product.id == -1 ? "Insert": "Edit"}} Product</h2>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup" (ngSubmit)="save()" #form>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label for="name">Name</mat-label>
+        <input matInput formControlName="name" type="text" name="name" />
+        @if (this.formGroup.controls['name'].invalid) {
+        <mat-error>{{getErrorMessage('name')}}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label for="description">Description</mat-label>
+        <textarea matInput formControlName="description" type="text" name="description"></textarea>
+        @if (this.formGroup.controls['description'].invalid) {
+        <mat-error>{{getErrorMessage('description')}}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label for="price">Price</mat-label>
+        <input matInput formControlName="price" type="number" name="price" />
+        @if (this.formGroup.controls['price'].invalid) {
+        <mat-error>{{getErrorMessage('price')}}</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="stock">Stock</mat-label>
+        <input matInput formControlName="stock" type="number" name="stock" />
+        @if (this.formGroup.controls['stock'].invalid) {
+        <mat-error>{{getErrorMessage('stock')}}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="actions">
+      <div class="spacer"></div>
+      <button mat-raised-button color="accent" (click)="form.requestSubmit()"><mat-icon>save</mat-icon> Save</button>
+    </div>
+  </form>
+</div>

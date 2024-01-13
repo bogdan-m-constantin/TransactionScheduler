@@ -12,10 +12,11 @@ namespace TransactionScheduling.Project.Domain.Operations.Orders
             RollbackOperation = RollbackOperation.Delete;
             base.Execute();
 
-            using var cmd = new SqlCommand($"INSERT INTO Orders (Client ,Timestamp) VALUES (@Client ,@Timestamp); SET @id = SCOPE_IDENTITY()", _con);
+            using var cmd = new SqlCommand($"INSERT INTO Orders (Client ,Timestamp, Total) VALUES (@Client ,@Timestamp, @Total); SET @id = SCOPE_IDENTITY()", _con);
             cmd.Parameters.Add(new("@Id", 0) { Direction = ParameterDirection.Output });
             cmd.Parameters.Add(new("@Client", order.Client));
             cmd.Parameters.Add(new("@Timestamp", order.Timestamp));
+            cmd.Parameters.Add(new("@Total", order.Items.Sum(e=> e.Quantity * e.Price)));
             cmd.ExecuteNonQuery();
             order.Id = Convert.ToInt32(cmd.Parameters["@Id"].Value);
             RowIds.Add(order.Id);

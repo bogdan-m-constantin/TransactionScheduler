@@ -1,0 +1,41 @@
+.row {
+  display: flex;
+
+  margin-top: 16px;
+
+  &>div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-details {
+    margin-right: 32px;
+
+  }
+
+}
+
+h3 {
+  margin: 0;
+  margin-bottom: 16px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.detail-item {
+
+  font-size: 18px !important;
+  display: flex;
+
+  .detail-item-title {
+    font-weight: 500;
+    margin-right: 8px;
+
+  }
+
+  .detail-item-value {
+    text-align: right;
+    flex-grow: 1;
+  }
+}

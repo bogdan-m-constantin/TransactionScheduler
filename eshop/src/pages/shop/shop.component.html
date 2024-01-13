@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+
+
+  <h1><mat-icon>storefront</mat-icon> eShop</h1>
+  <span class=" spacer"></span>
+  <button mat-icon-button (click)="showShoppingCart($event)"><mat-icon aria-hidden="false"
+      [matBadge]="order.items.length" [matBadgeColor]="'accent'">shopping_cart</mat-icon>
+  </button>
+  <button (click)="logout()" mat-button><mat-icon>exit_to_app</mat-icon> Logout</button>
+</mat-toolbar>
+<div class="wrapper">
+  <div class="shopping-cart mat-elevation-z4" [class.hidden]="!shoppingCart">
+    <div class="shopping-cart-content">
+
+    </div>
+  </div>
+
+  <div class="content mat-elevation-z4">
+    @for (product of products; track product.id) {
+    <div class="product-item">
+      <span class="product-title">{{product.name}}</span>
+    </div>
+    }
+  </div>
+</div>

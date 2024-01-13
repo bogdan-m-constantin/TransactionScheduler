@@ -1,0 +1,17 @@
+<div class="wrapper">
+  <div class="login-wrapper mat-elevation-z6">
+    <form [formGroup]="formGroup" (ngSubmit)="login()">
+      <h1>Login</h1>
+      <hr />
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input name="username" matInput type="text" formControlName="username" placeholder="Enter your username">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input name="password" matInput type="password" formControlName="password" placeholder="Enter your password">
+      </mat-form-field>
+      <button mat-raised-button color="accent">Login</button>
+    </form>
+  </div>
+</div>

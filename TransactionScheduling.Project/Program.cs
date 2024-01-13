@@ -15,7 +15,10 @@ builder.Services.AddSingleton<WaitForGraph>();
 builder.Services.AddSingleton<TransactionSchedulerService>();
 builder.Services.AddSingleton<TransactionSchedulerHostedService>();
 builder.Services.AddHostedService<TransactionSchedulerHostedService>();
-
+builder.Services.AddCors((options) =>
+{
+    options.AddPolicy("cors", (cors) => cors.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,7 +27,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("cors");
 app.UseAuthorization();
 
 app.MapControllers();

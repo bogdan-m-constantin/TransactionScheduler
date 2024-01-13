@@ -7,7 +7,7 @@ using TransactionScheduling.Project.Domain.Operations.Clients;
 using TransactionScheduling.Project.Domain.Operations.OrderItems;
 using TransactionScheduling.Project.Domain.Operations.Orders;
 using TransactionScheduling.Project.Domain.Operations.Products;
-using TransactionScheduling.Project.Domain.Operations.ProductStockChange;
+using TransactionScheduling.Project.Domain.Operations.ProductStockChanges;
 using TransactionScheduling.Project.Domain.SQL;
 using TransactionScheduling.Project.Services;
 
@@ -24,12 +24,22 @@ namespace TransactionScheduling.Project
         [HttpGet("{clientId}")]
         public ActionResult<List<Order>> GetOrders(int clientId)
         {
-            using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
-            con1.Open();
+            using var con = new SqlConnection(_sql[SqlDatabase.DB2]);
+            con.Open();
             var transaction = new Transaction();
-            transaction.Operations.Enqueue(new ReadOrderOperation(con1,clientId, null));
+            transaction.Operations.Enqueue(new ReadOrderOperation(con, clientId, null));
             var resp = _service.Run(transaction);
             return Ok((List<Order>)resp[0]!);
+        }
+        [HttpGet("items/{orderId}")]
+        public ActionResult<List<OrderItem>> GetOrderItems(int orderId)
+        {
+            using var con = new SqlConnection(_sql[SqlDatabase.DB2]);
+            con.Open();
+            var transaction = new Transaction();
+            transaction.Operations.Enqueue(new ReadOrderItemsOperation(con, orderId));
+            var resp = _service.Run(transaction);
+            return Ok((List<OrderItem>)resp[0]!);
         }
         [HttpPost()]
         public ActionResult<Order> InsertOrder([FromBody] Order order)

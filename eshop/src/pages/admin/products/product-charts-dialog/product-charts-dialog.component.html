@@ -1,0 +1,6 @@
+<div mat-dialog-content>
+  @if (chartOptions) {
+  <apx-chart [series]="chartOptions!.series!" [stroke]="chartOptions!.stroke!" [xaxis]="chartOptions.xaxis!"
+    [chart]="chartOptions!.chart!" [title]="chartOptions.title!"></apx-chart>
+  }
+</div>

@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" (click)="drawer.toggle()"
+    aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>eShopAdmin</span>
+  <span class="spacer"></span>
+  <button (click)="logout()" mat-button><mat-icon>exit_to_app</mat-icon> Logout</button>
+</mat-toolbar>
+
+<mat-drawer-container calss="container">
+  <mat-drawer #drawer mode="side" opened class="nav-drawer  mat-elevation-z8">
+    <mat-nav-list role="list">
+      <mat-list-item role="listitem" [activated]="selectedEntity == 'clients'" (click)="selectedEntity = 'clients'">
+        <mat-icon matListItemIcon>group</mat-icon>
+        <span matListItemTitle>Clients</span>
+      </mat-list-item>
+      <mat-list-item role="listitem" [activated]="selectedEntity == 'products'" (click)="selectedEntity = 'products'">
+        <mat-icon matListItemIcon>inventory_2</mat-icon>
+        <span matListItemTitle>Products</span>
+      </mat-list-item>
+      <mat-list-item role="listitem" [activated]="selectedEntity == 'orders'" (click)="selectedEntity = 'orders'">
+        <mat-icon matListItemIcon>shopping_cart</mat-icon>
+        <span matListItemTitle>Orders</span>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content style="height: calc(100vh - 64px); overflow: auto;">
+
+    @if (selectedEntity == 'products'){
+    <app-products></app-products>
+    }
+    @else if (selectedEntity == 'clients'){
+    <app-clients></app-clients>
+    }
+    @else {
+    <app-orders></app-orders>
+    }
+  </mat-drawer-content>
+</mat-drawer-container>

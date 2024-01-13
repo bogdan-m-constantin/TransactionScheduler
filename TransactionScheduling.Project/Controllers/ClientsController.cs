@@ -40,5 +40,29 @@ namespace TransactionScheduling.Project.Controllers
 
 
         }
+        [HttpPost("")]
+        public ActionResult<Client> InsertClient(Client c)
+        {
+            using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
+            con1.Open();
+            var transaction = new Transaction();
+            transaction.Operations.Enqueue(new InsertClientOperation(con1, c));
+            var resp = _service.Run(transaction);
+            return Ok((Client)resp[0]!);
+
+
+        }
+        [HttpPut("")]
+        public ActionResult<Client> UpdateClient(Client c)
+        {
+            using var con1 = new SqlConnection(_sql[SqlDatabase.DB1]);
+            con1.Open();
+            var transaction = new Transaction();
+            transaction.Operations.Enqueue(new UpdateClientOperation(con1, c));
+            var resp = _service.Run(transaction);
+            return Ok((Client)resp[0]!);
+
+
+        }
     }
 }

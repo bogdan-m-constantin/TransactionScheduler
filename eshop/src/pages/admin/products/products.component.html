@@ -1,0 +1,48 @@
+<div class="wrapper">
+  <div class="header">
+    <h1>Products</h1>
+  </div>
+  <div class="content mat-elevation-z3">
+    <div class="sub-toolbar mat-elevation-z3">
+      <button mat-raised-button color="accent" (click)="createProduct()"><mat-icon>add</mat-icon> Add</button>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="actions">
+        <th style="width: 176px;" mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="updateProduct(element)"><mat-icon>edit</mat-icon></button><button
+            mat-icon-button (click)="deleteProduct(element)"><mat-icon>delete</mat-icon></button><button mat-icon-button
+            (click)="showCharts(element)"><mat-icon>query_stats</mat-icon></button>
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef> Description </th>
+        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="stock">
+        <th style="width: 0px;" mat-header-cell *matHeaderCellDef> Stock </th>
+        <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th style="width: 0px;" mat-header-cell *matHeaderCellDef> Price </th>
+        <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons aria-label="Select page ">
+    </mat-paginator>
+  </div>
+</div>

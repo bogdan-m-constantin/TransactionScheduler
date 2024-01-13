@@ -1,0 +1,66 @@
+<div mat-dialog-title>
+  <div class="top-bar">
+    <h2>Order Details</h2>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="order-details">
+      <h3>Order</h3>
+      <div class="detail-item">
+        <span class="detail-item-title">Number</span><span class="detail-item-value">{{order.id}}</span>
+      </div>
+      <div class="detail-item"><span class="detail-item-title">Timestamp</span><span
+          class="detail-item-value">{{order.timestamp | date: 'dd MMM yyyy HH:mm'}}</span>
+      </div>
+      <div class="detail-item"><span class="detail-item-title">Total</span><span class="detail-item-value">{{order.total
+          | number: '1.2'}}</span>
+      </div>
+    </div>
+    <div class="client-details">
+      <h3>Client</h3>
+      <div class="detail-item">
+        <span class="detail-item-title">Name</span><span class="detail-item-value">{{client.firstName}}
+          {{client.lastName}}</span>
+
+      </div>
+      <div class="detail-item">
+        <span class="detail-item-title">Age</span><span class="detail-item-value">{{age }}</span>
+
+      </div>
+      <div class="detail-item"><span class="detail-item-title">Points</span><span
+          class="detail-item-value">{{client.ammountOfPoints}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <h3>Items</h3>
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="timestamp" matSortDirection="desc">
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
+          <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+        </ng-container><ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price}}</td>
+        </ng-container><ng-container matColumnDef="total">
+          <th style="text-align: center;" mat-header-cell mat-sort-header *matHeaderCellDef> Total </th>
+          <td style="text-align: center;" mat-cell *matCellDef="let element"> {{element.quantity * element.price |
+            number: '1.2'}} RON</td>
+        </ng-container>
+
+      </table>
+      <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons aria-label="Select page ">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
