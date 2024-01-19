@@ -4,6 +4,7 @@ export interface Product {
   description: string,
   stock: number,
   price: number,
+  image: string
 }
 export interface ProductStockChange {
   productId: number,
@@ -40,4 +41,5 @@ export interface OrderItem {
   productName: string
   price: number,
   quantity: number,
+  image: string,
 }

@@ -59,7 +59,7 @@ export class ProductChartsDialogComponent implements OnInit {
 
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'straight'
       },
       title: {
         text: "Product History"

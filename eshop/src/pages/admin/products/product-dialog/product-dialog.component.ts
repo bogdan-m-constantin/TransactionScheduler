@@ -55,6 +55,20 @@ export class ProductDialogComponent {
     }
     return "";
   }
+  private files = []
+  setImage(file: File) {
+
+    if (!file) return;
+
+    const FR = new FileReader();
+
+    FR.addEventListener("load", (evt) => {
+      this.product.image = evt.target?.result + "";
+    });
+
+    FR.readAsDataURL(file);
+
+  }
 
 
 }

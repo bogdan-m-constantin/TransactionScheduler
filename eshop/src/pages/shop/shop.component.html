@@ -18,15 +18,17 @@
     <div class="shopping-cart-content">
       @for (item of order.items; track $index) {
       <div class="item">
-        <img src="../../assets/product.png"><span class="pname">{{item.productName}}</span><span
-          class="qty">x{{item.quantity}}</span>
+        <div class="img-wrapper">
+          <img [src]="item.image">
+        </div>
+        <span class="pname">{{item.productName}}</span><span class="qty">x{{item.quantity}}</span>
         <span class="val">{{item.quantity * item.price}} Lei</span>
       </div>
       }
 
     </div>
     <div class="shopping-cart-total">
-      <span class="total">Total: </span><span>{{order.total |number: '1.2'}}</span>
+      <span class="total">Total: </span><span>{{order.total |number: '1.2'}} Lei</span>
     </div>
     <div class="shopping-cart-actions">
       <button mat-flat-button color="accent" (click)="finishOrder()"><mat-icon>shopping_cart_checkout</mat-icon>Finalize
@@ -39,7 +41,7 @@
     <div class="product-item">
       <div class="left-side">
         <div class="img-wrapper">
-          <img src="../../assets/product.png">
+          <img [src]="product.image">
         </div>
       </div>
       <div class="middle-side">

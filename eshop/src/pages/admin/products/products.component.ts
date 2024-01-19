@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { ProductDialogComponent } from './product-dialog/product-dialog.component';
 import { ProductChartsDialogComponent } from './product-charts-dialog/product-charts-dialog.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-products',
@@ -23,17 +24,20 @@ import { ProductChartsDialogComponent } from './product-charts-dialog/product-ch
 })
 export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   subs: Subscription[] = [];
-  displayedColumns: string[] = ['actions', 'name', 'description', 'stock', 'price'];
+  displayedColumns: string[] = ['actions', 'name', 'description', 'image', 'stock', 'price'];
   dataSource = new MatTableDataSource<Product>([]);
   constructor(private api: WebApiService, private dialog: MatDialog) {
 
   }
+  @ViewChild(MatSort) sort: MatSort | null = null;
+
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator | null = null;
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   ngOnInit(): void {
     this.refresh()
@@ -54,7 +58,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       description: "",
       name: "",
       price: 0,
-      stock: 0
+      stock: 0,
+      image: "../assets/product.png"
     }, (p) => {
       this.api.insertProduct(p).then((r) => { this.refresh().then(e => this.dataSource.paginator?.lastPage()) })
     })

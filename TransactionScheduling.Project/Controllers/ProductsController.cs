@@ -84,7 +84,6 @@ namespace TransactionScheduling.Project
             var resp = _service.Run(transaction);
             return Ok((Product)resp[0]!);
         }
-
         [HttpDelete("{product}")]
         public ActionResult<Product> DeleteProduct( int product)
         {

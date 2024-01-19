@@ -40,6 +40,13 @@
         <mat-error>{{getErrorMessage('stock')}}</mat-error>
         }
       </mat-form-field>
+      <div class="image-upload">
+        <div class="img-wrapper">
+          <img [src]="product.image" />
+        </div>
+        <label for="image">Image</label>
+        <input (change)="setImage($any($event.target).files[0])" type="file" name="image" />
+      </div>
     </div>
     <div class="actions">
       <div class="spacer"></div>

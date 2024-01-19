@@ -122,7 +122,7 @@ namespace TransactionScheduling.Project.Domain.Operations
             if (value == DBNull.Value)
                 return "NULL";
             if (col.DataType == typeof(string))
-                return $"'{value}'";
+                return $"'{value.ToString().Replace("'","`")}'";
             if (col.DataType == typeof(DateTime))
                 return $"'{(DateTime)value:yyyy-MM-dd HH:mm:ss}'";
             if (col.DataType == typeof(TimeSpan))

@@ -21,7 +21,8 @@ namespace TransactionScheduling.Project.Domain.Operations.Products
                     reader["Name"].ToString()!,
                     reader["Description"].ToString()!,
                     Convert.ToInt32(reader["Stock"]),
-                    Convert.ToDouble(reader["Price"])
+                    Convert.ToDouble(reader["Price"]),
+                    reader["Image"].ToString()!
                     )
                 );
             }

@@ -44,7 +44,7 @@ export class ShopComponent implements OnInit {
     this.shoppingCart = !this.shoppingCart
   }
   ngOnInit(): void {
-    this.api.getProducts().then(e => { this.products = e; e.forEach(e => this.addToCart(e)) })
+    this.api.getProducts().then(e => { this.products = e; })
 
     this.api.getClient(this.order.client).then(e => this.client = e);
   }
@@ -56,7 +56,8 @@ export class ShopComponent implements OnInit {
         price: product.price,
         productName: product.name,
         quantity: 1,
-        productId: product.id
+        productId: product.id,
+        image: product.image
       })
     }
     else {

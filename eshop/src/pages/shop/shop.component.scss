@@ -58,9 +58,15 @@ h1 {
   border-bottom: 1px solid #ccc;
   display: flex;
 
+  .img-wrapper {
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   img {
     max-width: 128px;
-    max-height: 224px;
   }
 
   .img-wrapper {
@@ -153,14 +159,22 @@ h1 {
     align-items: center;
     border-bottom: 1px solid #eee;
 
-    img {
-      max-width: 64px;
+    .img-wrapper {
+      padding: 8px;
       height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      max-width: 48px;
     }
 
     .pname {
       flex-grow: 1;
       padding: 8px;
+      flex-basis: 0;
       text-align: justify;
     }
 

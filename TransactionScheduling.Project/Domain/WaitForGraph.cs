@@ -21,7 +21,7 @@
         {
             foreach (var table in _tables)
             {
-                var visited = Array.Empty<Guid>();
+                var visited = new List<Guid>();
                 var t = table.TransactionHasLock?.TransactionWaitingLock;
 
                 while (t != null)
@@ -30,6 +30,7 @@
                     {
                         return t;
                     }
+                    visited.Add(t.Id);
                     t = t.TransactionWaitingLock;
                 }
             }
